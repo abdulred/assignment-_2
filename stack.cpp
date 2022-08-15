@@ -190,8 +190,10 @@ int calc<T>::evaluate(string result){
     }
  
     // At this point, the stack is left with only one element, i.e.,
-    // expression result
+    // expression result/////
     return stack.top();
+    /* idoss kjfp'jgio;jgprwgk[w
+    oigkjrgjrgirigierjgrpogpfojg*]*/
 }
 
 

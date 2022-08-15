@@ -127,42 +127,47 @@ else {//if you scan operator the following will be done.
 }
 template<class T>
 int calc<T>::evaluate(string result){
-
-       stack<double> stev;
-   for(int i=0;result[i];i++){
-    if(isdigit(result[i])){
-    stev.push(result[i]);
-
-   }
-   else{
-    int val1=stev.top();
-    stev.pop();
-    int val2=stev.top();
-    stev.pop();
-    switch (result[i])
+    // create an empty stack
+    stack<int> stack;
+ 
+    // traverse the given expression
+    for (char c: result)
     {
-   	case '+':
-         stev.push( val2 + val1); 
-         break;
-	case '-':
-        stev.push(val2 - val1);
-              break;
-	case '*':
-             stev.push( val2 * val1);
-              break;
-	case '/':
-             stev.push(val2/val1); 
-             break;
-    
-    default:
-        break;
+        // if the current character is an operand, push it into the stack
+        if (c >= '0' && c <= '9') {
+            stack.push(c - '0');
+        }
+        // if the current character is an operator
+        else {
+            // remove the top two elements from the stack
+            int x = stack.top();
+            stack.pop();
+ 
+            int y = stack.top();
+            stack.pop();
+ 
+            // evaluate the expression 'x op y', and push the
+            // result back to the stack
+            if (c == '+') {
+                stack.push(y + x);
+            }
+            else if (c == '-') {
+                stack.push(y - x);
+            }
+            else if (c == '*') {
+                stack.push(y * x);
+            }
+            else if (c == '/') {
+                stack.push(y / x);
+            }
+        }
     }
-   }
-     double res = stev.top();
-    return res;
+ 
+    // At this point, the stack is left with only one element, i.e.,
+    // expression result
+    return stack.top();
 }
 
-}
 
 
 

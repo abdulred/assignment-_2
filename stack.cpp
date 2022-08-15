@@ -4,34 +4,12 @@
 
 using namespace std;
 
-
-
-
-
-struct MemoryException: public std::exception{
-    const char * what () {
-
-        return "Unable to allocate memory for the stack!";
-    }
-};
-
-struct FullStackException: public std::exception{
-    const char * what () {
-        return "Stack is full!";
-    }
-};
-struct EmptyStackException: public std::exception{
-    const char * what () {
-        return "Popping an empty stack!";
-    }
-};
 template<class T>
 class calc
 {
 
 public:
-
-  string symbolType(char symbols);
+  int symbolType(char symbols);
   int precValue(char symbol);
   int cmpPrec(char oprStk,char oprlnp);
   int associativity(char opr);
@@ -39,11 +17,12 @@ public:
   int evaluate(string postfix);
 
 };
+enum {OPARSTK=0,CPAR=5,ADD=10, MULT=15, EXP=20, SIGN = 25, OPARINP=30 };
 void display(){
     cout<<"hi mom!"<<endl;
 }
 template <class T>
-int calc<T>::symbolType(char symbols){
+int calc<T>::symbolType(char symbol){
 	if(symbol=='+' || symbol== '-' ||
 
   symbol== '*' || symbol=='/' || symbol=='^'||
@@ -59,29 +38,44 @@ int calc<T>::symbolType(char symbols){
 template<class T>
 int calc<T>::precValue(char symbol){
     if(symbol == '+'||symbol == '-')
-    return 1;
+    return ADD;
 
     if(symbol == '*'||symbol == '/')
-    return 2;
+    return MULT;
 
     if(symbol =='^')
-    return 3;
+    return EXP;
+    if(symbol=='#'||symbol=='~')
+    return SIGN;
+    if(symbol=='(')
+    return OPARSTK;
+    if(symbol==')')
+    return CPAR;
+    if(symbol=='[')
+    return OPARINP;
 
     return 0;
 }
 
 template <class T>
 int calc<T>::cmpPrec(char oprStk,char oprlnp){
-    if(st.empty()) return 1;
-    while ()
-    {
-        /* code */
-    }
+	int sym1,sym2;
+	sym1=precValue(oprStk);
+	sym2=precValue(oprlnp);
+	if(sym1 < sym2)
+		return -1;
+	else if (sym1==sym2)
+		return 0;
+	else
+		return 1;
     
 }
 template<class T>
   int calc<T>:: associativity(char opr){
-    
+    	if(opr=='^')
+		return 0;
+	else
+		return 1;
   }
 
 template<class T>
@@ -127,13 +121,48 @@ else {//if you scan operator the following will be done.
         result += st.top();
         st.pop();
     }
-
+    cout<< "Your infix expression converted to post fix is:";
     cout << result << endl;
     return 0;
 }
+template<class T>
+int calc<T>::evaluate(string result){
 
+       stack<double> stev;
+   for(int i=0;result[i];i++){
+    if(isdigit(result[i])){
+    stev.push(result[i]);
 
+   }
+   else{
+    int val1=stev.top();
+    stev.pop();
+    int val2=stev.top();
+    stev.pop();
+    switch (result[i])
+    {
+   	case '+':
+         stev.push( val2 + val1); 
+         break;
+	case '-':
+        stev.push(val2 - val1);
+              break;
+	case '*':
+             stev.push( val2 * val1);
+              break;
+	case '/':
+             stev.push(val2/val1); 
+             break;
+    
+    default:
+        break;
+    }
+   }
+     double res = stev.top();
+    return res;
+}
 
+}
 
 
 

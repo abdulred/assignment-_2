@@ -10,7 +10,8 @@ int main(){
  //string exp = "a+b*(c^d-e)^(f+g*h)-i";
   calc<string> d;
   
-d.topostfix("a+b*(c^d-e)^(f+g*h)-i");
-    return 0;
+d.evaluate("231*+9-");
+  
+
 }
 

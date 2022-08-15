@@ -116,6 +116,31 @@ else {//if you scan operator the following will be done.
         }
     }
 
+
+
+/* This is so annoytin that is has to be rf*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Pop all the remaining elements from the stack
     while (!st.empty()) {
         result += st.top();

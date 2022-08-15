@@ -11,6 +11,7 @@ int main(){
   calc<string> d;
   
 d.evaluate("231*+9-");
+cout << "hi Mom!";
   
 
 }

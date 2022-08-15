@@ -138,6 +138,7 @@ int calc<T>::evaluate(string result){
             stack.push(c - '0');
         }
         // if the current character is an operator
+        
         else {
             // remove the top two elements from the stack
             int x = stack.top();
